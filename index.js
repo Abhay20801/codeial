@@ -2,9 +2,16 @@ const express = require('express');
 const app = express();
 
 const port = 8000;
+const cookieParser = require('cookie-parser');
 
 const expressLayout = require('express-ejs-layouts');
+const db = require('./config/mongoose');
 
+// Reading through POST request
+app.use(express.urlencoded());
+
+// Setup The cookieParser
+app.use(cookieParser());
 // Setup the static file
 // First we tell app in which folder to look for static files
 app.use(express.static('./assests'));
