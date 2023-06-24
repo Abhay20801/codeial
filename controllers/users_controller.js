@@ -9,6 +9,10 @@ module.exports.profile = function(req,res){
 
 // Sign Up Controller
 module.exports.signUp = function(req,res){
+    if(req.isAuthenticated()){
+      return res.redirect('/users/profile');
+    }
+
     return res.render('user_signup',{
         title: "Codeial || Sign Up"
     });
@@ -16,6 +20,9 @@ module.exports.signUp = function(req,res){
 
 // Sign In Controller
 module.exports.signIn = function(req,res){
+  if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+  }
     return res.render('user_signin',{
         title: "Codeial || Sign In"
     });
@@ -72,5 +79,5 @@ module.exports.create = async function (req, res) {
   
 // Sign in and create a session for the user
 module.exports.createSession = function(req,res){
-    // To be done soon 
+    return res.redirect('/');
 }
