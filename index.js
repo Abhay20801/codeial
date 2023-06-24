@@ -10,6 +10,9 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const MongoStore = require('connect-mongo');
+
+
 // Reading through POST request
 app.use(express.urlencoded());
 
@@ -32,6 +35,7 @@ app.set('layout extractScripts',true);
 
 
 // Middleware which takes the session cookies & encrypts it
+// mongo store is used to store the session cookie in the db
 app.use(session({
     // Name of cookie or software
     name:'codeial',
@@ -42,8 +46,18 @@ app.use(session({
     cookie: {
         // No of seconds in ms
         maxAge: (1000 * 60 * 100)
+    },
+    store: MongoStore.create(
+        {
+            mongoUrl: 'mongodb://127.0.0.1:27017/codeial_developement',
+            //  mongooseConnection:db,
+            autoRemove : 'diabled'
+        
+    },
+    function(err){
+        console.log(err || 'connect mongoose setup ok');
     }
-
+    )
 
 }));
 
